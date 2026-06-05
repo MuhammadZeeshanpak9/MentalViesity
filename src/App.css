@@ -1,0 +1,69 @@
+/* Responsive grid layouts */
+@media (min-width: 768px) {
+  .grid-two-col {
+    grid-template-columns: 55fr 45fr !important;
+  }
+
+  .grid-two-col-reverse {
+    grid-template-columns: 45fr 55fr !important;
+  }
+
+  .grid-two-col-reverse > div:first-child {
+    order: 1 !important;
+  }
+
+  .grid-two-col-reverse > div:last-child {
+    order: 2 !important;
+  }
+}
+
+/* Mobile navigation */
+@media (max-width: 767px) {
+  .nav-desktop {
+    display: none !important;
+  }
+
+  .nav-mobile-toggle {
+    display: block !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .nav-mobile-toggle {
+    display: none !important;
+  }
+
+  .nav-mobile-menu {
+    display: none !important;
+  }
+}
+
+/* Section padding responsive */
+@media (max-width: 767px) {
+  section {
+    padding-top: 80px !important;
+    padding-bottom: 80px !important;
+  }
+}
+
+/* Ensure smooth scrolling */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
