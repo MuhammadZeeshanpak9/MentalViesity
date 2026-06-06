@@ -35,33 +35,9 @@ interface Star {
   index: number;
 }
 
-interface ChakraData {
-  r: number;
-  g: number;
-  b: number;
-  y: number;
-}
-
-interface StreamParticle {
-  y: number;
-  speed: number;
-  index: number;
-}
-
 const PARTICLE_COUNT = 150;
 const ORBITAL_COUNT = 12;
-const CHAKRA_COUNT = 7;
 const STAR_COUNT = 70;
-
-const CHAKRA_DATA: ChakraData[] = [
-  { r: 255, g: 50, b: 50, y: 0.88 },
-  { r: 255, g: 140, b: 0, y: 0.76 },
-  { r: 255, g: 215, b: 0, y: 0.64 },
-  { r: 0, g: 230, b: 118, y: 0.52 },
-  { r: 0, g: 176, b: 255, y: 0.40 },
-  { r: 75, g: 0, b: 130, y: 0.28 },
-  { r: 148, g: 0, b: 211, y: 0.16 },
-];
 
 export default function ThemeBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -83,16 +59,8 @@ export default function ThemeBackground() {
     const rings: Ring[] = [];
     const orbitals: Orbital[] = [];
     const stars: Star[] = [];
-    const streamParticles: StreamParticle[] = [];
     let ringCounter = 0;
     const isMobile = window.innerWidth < 768;
-
-    // Brain image for background layer
-    const brainImage = new Image();
-    brainImage.crossOrigin = 'anonymous';
-    let brainLoaded = false;
-    brainImage.onload = () => { brainLoaded = true; };
-    brainImage.src = '/images/neural-viz.jpg';
 
     function resize() {
       width = window.innerWidth;
@@ -151,15 +119,6 @@ export default function ThemeBackground() {
         });
       }
 
-      // Initialize stream particles for chakra energy streams
-      streamParticles.length = 0;
-      for (let i = 0; i < 15; i++) {
-        streamParticles.push({
-          y: 0,
-          speed: 0.002 + Math.random() * 0.003,
-          index: i,
-        });
-      }
     }
 
     // Layer 1: Cosmic Intelligence Field
@@ -192,43 +151,6 @@ export default function ThemeBackground() {
         ctx!.fillStyle = `rgba(255, 255, 255, ${brightness * 0.6})`;
         ctx!.fill();
       }
-    }
-
-    // Brain Layer: Rotating brain image with glow
-    function drawBrainLayer() {
-      if (!brainLoaded || isMobile) return;
-
-      const brainSize = Math.min(width, height) * 0.65;
-      const pulseAlpha = 0.55 + Math.sin(time * 0.002) * 0.1;
-
-      ctx!.save();
-      ctx!.translate(width * 0.5, height * 0.5);
-      // Clockwise rotation
-      ctx!.rotate(time * 0.00012);
-
-      // Strong violet glow behind the brain
-      const glowSize = brainSize * 1.5;
-      const glowGradient = ctx!.createRadialGradient(0, 0, brainSize * 0.2, 0, 0, glowSize * 0.5);
-      glowGradient.addColorStop(0, `rgba(124, 92, 255, ${pulseAlpha * 0.8})`);
-      glowGradient.addColorStop(0.3, `rgba(75, 0, 130, ${pulseAlpha * 0.5})`);
-      glowGradient.addColorStop(0.7, `rgba(0, 229, 255, ${pulseAlpha * 0.2})`);
-      glowGradient.addColorStop(1, 'rgba(124, 92, 255, 0)');
-      ctx!.fillStyle = glowGradient;
-      ctx!.fillRect(-glowSize * 0.5, -glowSize * 0.5, glowSize, glowSize);
-
-      // Brain image with additive blending for nebula glow effect
-      ctx!.globalAlpha = pulseAlpha;
-      ctx!.globalCompositeOperation = 'lighter';
-      ctx!.drawImage(
-        brainImage,
-        -brainSize / 2,
-        -brainSize / 2,
-        brainSize,
-        brainSize
-      );
-      ctx!.globalCompositeOperation = 'source-over';
-      ctx!.globalAlpha = 1.0;
-      ctx!.restore();
     }
 
     // Layer 2: Consciousness Network
@@ -410,46 +332,6 @@ export default function ThemeBackground() {
       }
     }
 
-    // Layer 6: Chakra Energy System
-    function drawChakraSystem() {
-      if (isMobile) return;
-
-      const chakraX = width * 0.85;
-
-      for (let i = 0; i < CHAKRA_COUNT; i++) {
-        const chakra = CHAKRA_DATA[i];
-        const chakraY = height * chakra.y;
-        const baseRadius = 12;
-        const pulseRadius = baseRadius * (1 + Math.sin(time * 0.003 + i * 0.8) * 0.4);
-
-        // Glow
-        ctx!.save();
-        ctx!.shadowBlur = 20;
-        ctx!.shadowColor = `rgba(${chakra.r}, ${chakra.g}, ${chakra.b}, 0.6)`;
-        ctx!.beginPath();
-        ctx!.arc(chakraX, chakraY, pulseRadius, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(${chakra.r}, ${chakra.g}, ${chakra.b}, 0.8)`;
-        ctx!.fill();
-        ctx!.restore();
-
-        // Energy stream to next chakra
-        if (i < CHAKRA_COUNT - 1) {
-          const nextChakra = CHAKRA_DATA[i + 1];
-          const nextY = height * nextChakra.y;
-
-          for (const particle of streamParticles) {
-            const progress = (time * particle.speed + particle.index / streamParticles.length) % 1;
-            const py = chakraY + (nextY - chakraY) * progress;
-
-            ctx!.beginPath();
-            ctx!.arc(chakraX, py, 2, 0, Math.PI * 2);
-            ctx!.fillStyle = `rgba(${chakra.r}, ${chakra.g}, ${chakra.b}, 0.4)`;
-            ctx!.fill();
-          }
-        }
-      }
-    }
-
     // Layer 7: Discovery Layer
     function drawDiscoveryLayer() {
       // Flower of Life (after 5 seconds)
@@ -537,12 +419,10 @@ export default function ThemeBackground() {
       ctx.fillRect(0, 0, width, height);
 
       drawCosmicField();
-      drawBrainLayer();
       drawConsciousnessNetwork();
       drawAtomicStructures();
       drawConsciousnessPortal();
       drawHumanEvolution();
-      drawChakraSystem();
       drawDiscoveryLayer();
 
       time++;
@@ -559,12 +439,10 @@ export default function ThemeBackground() {
       ctx.fillStyle = '#0D0520';
       ctx.fillRect(0, 0, width, height);
       drawCosmicField();
-      drawBrainLayer();
       drawConsciousnessNetwork();
       drawAtomicStructures();
       drawConsciousnessPortal();
       drawHumanEvolution();
-      drawChakraSystem();
       drawDiscoveryLayer();
     } else {
       init();
@@ -579,12 +457,10 @@ export default function ThemeBackground() {
         ctx!.fillStyle = '#0D0520';
         ctx!.fillRect(0, 0, width, height);
         drawCosmicField();
-        drawBrainLayer();
         drawConsciousnessNetwork();
         drawAtomicStructures();
         drawConsciousnessPortal();
         drawHumanEvolution();
-        drawChakraSystem();
         drawDiscoveryLayer();
       }
     };
