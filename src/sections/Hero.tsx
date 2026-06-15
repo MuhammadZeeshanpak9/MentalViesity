@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import videoSrc from '../Home_Page_Vid/Video.mp4';
+
+const videoSrc = '/Home_Page_Vid/Video.mp4';
 
 function SpeakerOffIcon() {
   return (

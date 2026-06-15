@@ -14,6 +14,7 @@ dist-ssr
 
 # Large media files (host on CDN for production)
 src/Home_Page_Vid/
+public/Home_Page_Vid/
 
 # Editor directories and files
 .vscode/*
