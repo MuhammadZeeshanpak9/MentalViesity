@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import logoImg from '../logo/Logo.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -91,29 +92,43 @@ export default function Footer() {
             gap: '32px',
           }}
         >
-          <div>
-            <div
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <img
+              src={logoImg}
+              alt="ELEV8 Mentalversity"
               style={{
-                fontFamily: "'Orbitron', sans-serif",
-                fontSize: '24px',
-                fontWeight: 700,
-                color: '#F8F9FF',
-                letterSpacing: '0.05em',
+                width: '56px',
+                height: '56px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: '2px solid rgba(124, 92, 255, 0.5)',
+                boxShadow: '0 0 16px rgba(124, 92, 255, 0.3)',
               }}
-            >
-              ELEV8
-            </div>
-            <div
-              style={{
-                fontFamily: "'Orbitron', sans-serif",
-                fontSize: '14px',
-                fontWeight: 400,
-                color: 'rgba(248, 249, 255, 0.35)',
-                letterSpacing: '0.2em',
-                marginTop: '4px',
-              }}
-            >
-              Mentalversity
+            />
+            <div>
+              <div
+                style={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontSize: '24px',
+                  fontWeight: 700,
+                  color: '#F8F9FF',
+                  letterSpacing: '0.05em',
+                }}
+              >
+                ELEV8
+              </div>
+              <div
+                style={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontSize: '14px',
+                  fontWeight: 400,
+                  color: 'rgba(248, 249, 255, 0.35)',
+                  letterSpacing: '0.2em',
+                  marginTop: '4px',
+                }}
+              >
+                Mentalversity
+              </div>
             </div>
           </div>
 

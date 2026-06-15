@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import logoImg from '../logo/Logo.png';
 
 interface NavigationProps {
   onReturnClick: () => void;
@@ -56,17 +57,18 @@ export default function Navigation({ onReturnClick }: NavigationProps) {
         opacity: 0,
       }}
     >
-      <div
+      <img
+        src={logoImg}
+        alt="ELEV8 Mentalversity"
         style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: '18px',
-          fontWeight: 600,
-          color: '#F8F9FF',
-          letterSpacing: '0.1em',
+          width: '48px',
+          height: '48px',
+          borderRadius: '50%',
+          objectFit: 'cover',
+          border: '2px solid rgba(124, 92, 255, 0.5)',
+          boxShadow: '0 0 12px rgba(124, 92, 255, 0.3)',
         }}
-      >
-        ELEV8
-      </div>
+      />
 
       {/* Desktop Nav */}
       <div

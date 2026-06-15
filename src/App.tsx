@@ -60,7 +60,7 @@ export default function App() {
 
       {toast.visible && <Toast message={toast.message} onDismiss={handleToastDismiss} />}
 
-      <div style={{ position: 'relative', zIndex: 1 }}>
+      <div style={{ position: 'relative', zIndex: 1, paddingTop: '72px' }}>
         <Hero />
         <CountdownTimer />
         <Vision />
